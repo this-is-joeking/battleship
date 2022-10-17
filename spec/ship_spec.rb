@@ -2,7 +2,7 @@ require 'rspec'
 require './lib/ship'
 
 RSpec.describe Ship do
-  
+
   # Test it can create new ships
   it 'exits' do
     cruiser = Ship.new("Cruiser", 3)
@@ -11,21 +11,21 @@ RSpec.describe Ship do
   end
 
   # Test the ship has a name
-  xit 'has a name' do
+  it 'has a name' do
     cruiser = Ship.new("Cruiser", 3)
 
     expect(cruiser.name).to eq("Cruiser")
   end
 
   # Test the ship has length
-  xit 'has length' do
+  it 'has length' do
     cruiser = Ship.new("Cruiser", 3)
 
     expect(cruiser.length).to eq(3)
   end
 
   # Test the ship has health (should equal the length)
-  xit 'has health' do
+  it 'has health' do
     cruiser = Ship.new("Cruiser", 3)
     # probably need more code here
 
@@ -33,7 +33,7 @@ RSpec.describe Ship do
   end
 
   # Test health goes down one when hit
-  xit 'has health' do
+  it 'has health' do
     cruiser = Ship.new("Cruiser", 3)
     cruiser.hit
 
