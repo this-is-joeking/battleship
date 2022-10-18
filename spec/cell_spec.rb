@@ -22,10 +22,30 @@ describe Cell do
     expect(cell.ship).to eq nil
   end
 
-  it 'can confirm if the cell is empty' do
-    cell = Cell.new("D2")
+  describe '#empty?' do
+    it 'can confirm if the cell is empty' do
+      cell = Cell.new("D2")
 
-    expect(cell.empty?).to eq true
+      expect(cell.empty?).to eq true
+    end
+
+    it 'can confirm if the cell is not empty' do
+      cell = Cell.new("C3")
+      cruiser = Ship.new("Cruiser", 3)
+      cell.place_ship(cruiser)
+
+      expect(cell.empty?).to eq false
+    end
   end
 
+  describe '#place_ship' do
+    it 'can have a ship placed in a cell' do
+      cell = Cell.new("C3")
+      cruiser = Ship.new("Cruiser", 3)
+      cell.place_ship(cruiser)
+
+      expect(cell.ship).to be_a Ship
+    end
+
+  end
 end
