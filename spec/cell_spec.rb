@@ -2,7 +2,7 @@ require 'rspec'
 require './lib/ship'
 require './lib/cell'
 
-describ Cell do
+describe Cell do
   #Test the class exists and can be initiated
   it 'exists' do
     cell = Cell.new("A3")
