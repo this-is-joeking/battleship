@@ -10,9 +10,9 @@ class Ship
   end
 
   def hit
-    
+    @health = (health - 1)
   end
-  # def health
-  #
-  # end
+
+  
+
 end
