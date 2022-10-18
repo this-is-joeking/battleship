@@ -24,9 +24,11 @@ class Cell
 
   def render
     if fired_upon? == false
-      puts "."
+      p "."
     elsif fired_upon? == true
-      puts "M"
+      p "M"
+    # elsif
+    #   p "H"
     end
   end
 end

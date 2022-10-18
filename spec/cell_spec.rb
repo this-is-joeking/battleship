@@ -84,11 +84,13 @@ describe Cell do
   describe '#render' do
     it 'prints . if the cell has not been fired upon' do
       cell_1 = Cell.new("B4")
+      cruiser = Ship.new("Cruiser", 3)
+      cell_1.place_ship(cruiser)
 
       expect(cell_1.render).to eq(".")
     end
 
-    xit 'prints M if the shot was a miss' do
+    it 'prints M if the shot was a miss' do
       cell_1 = Cell.new("B4")
       cell_1.fire_upon
 
