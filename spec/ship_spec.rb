@@ -40,8 +40,8 @@ RSpec.describe Ship do
     expect(cruiser.health).to eq(2)
   end
 
-  # Test if sunk when health equals the ship's length
-  xit 'is sunk' do
+  # Test is sunk when hits equal health
+  it 'is sunk' do
     cruiser = Ship.new("Cruiser", 3)
     cruiser.hit
 

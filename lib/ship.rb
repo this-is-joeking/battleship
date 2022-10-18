@@ -13,6 +13,8 @@ class Ship
     @health = (health - 1)
   end
 
-  
+  def sunk?
+    
+  end
 
 end
