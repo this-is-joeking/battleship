@@ -21,4 +21,12 @@ class Cell
   def fire_upon
     ship.hit
   end
+
+  def render
+    if fired_upon? == false
+      puts "."
+    elsif fired_upon? == true
+      puts "M"
+    end
+  end
 end
