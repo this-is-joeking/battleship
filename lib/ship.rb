@@ -14,7 +14,10 @@ class Ship
   end
 
   def sunk?
-    
+    if @health >= 1
+      false
+    elsif @health <= 1
+      true
+    end
   end
-
 end
