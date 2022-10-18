@@ -22,11 +22,11 @@ class Cell
   def fire_upon
     if @ship.nil?
       @view = "M"
-    else
-      ship.hit
-      @view = "H"
+    elsif ship.hit
       if ship.sunk?
         @view = "X"
+      else
+        @view = "H"
       end
     end
   end
