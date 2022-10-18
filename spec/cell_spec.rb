@@ -3,7 +3,7 @@ require './lib/ship'
 require './lib/cell'
 
 describe Cell do
-  #Test the class exists and can be initiated
+  
   it 'exists' do
     cell = Cell.new("A3")
 
@@ -63,7 +63,7 @@ describe Cell do
       cell.place_ship(cruiser)
       cell.fire_upon
 
-      expect(cell.fired_upon).to eq true
+      expect(cell.fired_upon?).to eq true
     end
   end
 
@@ -75,7 +75,7 @@ describe Cell do
 
       expect(cell.ship.health).to eq 3
 
-      cell.fire_upon 
+      cell.fire_upon
 
       expect(cell.ship.health).to eq 2
     end
