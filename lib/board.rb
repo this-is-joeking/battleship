@@ -38,17 +38,19 @@ class Board
   end
 
   def valid_placement?(ship, placement)
-    if consecutive ==
-      
-
-      # placement.each do |location|
-      #   location[0] location[1]
-      end
+    place_alph = placement.map do |location|
+      location[0]
     end
-      if ship.length == placement.length
-        true
-      else
-        false
-      end
+    place_num = placement.map do |location|
+      location[1]
+    end
+    if ship.length != placement.length
+      false
+    elsif place_alph.uniq == 1
+      if place_num 
+
+
+      # if place_num.all? {|num| 1 || 2 || 3 || 4}
+    end
   end
 end
