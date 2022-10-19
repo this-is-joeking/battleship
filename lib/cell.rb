@@ -31,7 +31,7 @@ class Cell
     end
   end
 
-  def render
-    p @view
+  def render(variable = true)
+    @view
   end
 end
