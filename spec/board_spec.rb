@@ -10,11 +10,13 @@ describe Board do
     expect(board).to be_a Board
   end
 
-  it 'holds a hash of 16 cards' do
+  it 'holds a hash of 16 cells' do
     board = Board.new
 
+    expect(board.cells).to be_a Hash
     expect(board.cells.length).to eq 16
     expect(board.cells["A1"]).to be_a Cell
     expect(board.cells["D4"]).to be_a Cell
   end
+
 end
