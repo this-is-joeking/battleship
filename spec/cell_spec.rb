@@ -108,7 +108,7 @@ describe Cell do
       expect(cell_2.render).to eq("H")
     end
 
-    xit 'prints X if the ship has been fired_upon and sunk' do
+    it 'prints X if the ship has been fired_upon and sunk' do
       cell_1 = Cell.new("B4")
       cell_2 = Cell.new("C3")
       cruiser = Ship.new("Cruiser", 3)
@@ -122,7 +122,7 @@ describe Cell do
       expect(cell_2.render).to eq("X")
     end
 
-    it 'reveals a ship even if not been fired upon' do
+    xit 'reveals a ship even if not been fired upon' do
       cell_1 = Cell.new("B4")
       cell_2 = Cell.new("C3")
       cruiser = Ship.new("Cruiser", 3)
