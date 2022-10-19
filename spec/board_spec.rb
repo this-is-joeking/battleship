@@ -19,4 +19,13 @@ describe Board do
     expect(board.cells["D4"]).to be_a Cell
   end
 
+  it 'validates a coordinate' do
+    board = Board.new
+    board.cells
+
+    expect(board.valid_coordinate?("A1")).to be true
+    expect(board.valid_coordinate?("D4")).to be true
+    expect(board.valid_coordinate?("A5")).to be false
+    expect(board.valid_coordinate?("E1")).to be false
+  end
 end
