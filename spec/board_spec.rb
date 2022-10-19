@@ -51,4 +51,24 @@ describe Board do
     expect(board.valid_placement?(cruiser, ["A3", "A2", "A1"])).to be false
     expect(board.valid_placement?(submarine, ["B1", "B2"])).to be true
   end
+
+  xit 'does not let coordinates be diagonal' do
+    board = Board.new
+    cruiser = Ship.new("Cruiser", 3)
+    submarine = Ship.new("Submarine", 2)
+    board.cells
+
+    expect(board.valid_placement?(cruiser, ["A1", "B2", "C3"])).to be false
+    expect(board.valid_placement?(submarine, ["C2", "D3"])).to be false
+  end
+
+  xit 'confirm placements are valid' do
+    board = Board.new
+    cruiser = Ship.new("Cruiser", 3)
+    submarine = Ship.new("Submarine", 2)
+    board.cells
+
+    expect(board.valid_placement?(submarine, ["A1", "A2"])).to be true
+    expect(board.valid_placement?(cruiser, ["B1", "C1", "D1"])).to be true
+  end
 end
