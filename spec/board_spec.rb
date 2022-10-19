@@ -28,4 +28,17 @@ describe Board do
     expect(board.valid_coordinate?("A5")).to be false
     expect(board.valid_coordinate?("E1")).to be false
   end
+
+  it 'validates length of the ship' do
+    board = Board.new
+    cruiser = Ship.new("Cruiser", 3)
+    submarine = Ship.new("Submarine", 2)
+    board.cells
+
+    expect(board.valid_placement?(cruiser, ["A1", "A2"])).to be false
+    expect(board.valid_placement?(submarine, ["A2", "A3", "A4"])).to be false
+    expect(board.valid_placement?(submarine, ["A2", "A3"])).to be true
+  end
+
+  
 end
