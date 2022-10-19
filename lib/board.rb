@@ -38,10 +38,17 @@ class Board
   end
 
   def valid_placement?(ship, placement)
-    if ship.length == placement.length
-      true
-    else
-      false
+    if consecutive ==
+      
+
+      # placement.each do |location|
+      #   location[0] location[1]
+      end
     end
+      if ship.length == placement.length
+        true
+      else
+        false
+      end
   end
 end
