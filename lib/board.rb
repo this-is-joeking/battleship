@@ -2,7 +2,7 @@ class Board
 # attr_reader :cells
 
   def initialize
-    @cell_holder = {}
+    @cell_holder = Hash.new(false)
   end
 
   def cells
@@ -29,4 +29,28 @@ class Board
     @cell_holder
   end
 
+  def valid_coordinate?(location)
+    if @cell_holder[location] == false
+      false
+    else
+      true
+    end
+  end
+
+  def valid_placement?(ship, placement)
+    place_alph = placement.map do |location|
+      location[0]
+    end
+    place_num = placement.map do |location|
+      location[1]
+    end
+    if ship.length != placement.length
+      false
+    elsif place_alph.uniq == 1
+      if place_num 
+
+
+      # if place_num.all? {|num| 1 || 2 || 3 || 4}
+    end
+  end
 end
