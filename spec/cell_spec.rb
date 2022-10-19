@@ -130,5 +130,14 @@ describe Cell do
 
       expect(cell_2.render(true)).to eq("S")
     end
+
+    it 'reveals where there is not a ship if render is called with true' do
+      cell_1 = Cell.new("B4")
+      cell_2 = Cell.new("C3")
+      cruiser = Ship.new("Cruiser", 3)
+
+      expect(cell_2.render(true)).to eq(".")
+    end
+
   end
 end
