@@ -23,15 +23,19 @@ class Cell
     if @ship.nil?
       @view = "M"
     elsif ship.hit
-      if ship.sunk?
-        @view = "X"
-      else
         @view = "H"
-      end
     end
   end
 
-  def render(variable = true)
+  def render(variable = false)
+    if ! empty? && ship.sunk?
+      @view = "X"
+    end
     @view
+      if variable == true && ! empty?
+        @view = "S"
+      else
+        @view
+      end 
   end
 end
