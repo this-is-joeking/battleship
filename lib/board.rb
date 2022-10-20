@@ -42,15 +42,51 @@ class Board
       location[0]
     end
     place_num = placement.map do |location|
-      location[1]
+      location[1].to_i
     end
+    # build array of num array pairs
+    num_pairs = place_num.each_cons(2).to_a
+    # create array checking each pair is consecutive
+    num_pairs_cons = num_pairs.map do |pair|
+      if pair[0] + 1 == pair[1]
+        true
+      else
+        false
+      end
+    end
+    # turn num pairs into single bool confiriming if place_num is consecutive
+    nums_are_cons = if num_pairs_cons.uniq == [true]
+      true
+    else
+      false
+    end
+    # build array of letter pairs
+    alph_pairs = place_alph.each_cons(2).to_a
+    # create array checking each pair of letters is consecutive
+    alph_pairs_cons = alph_pairs.map do |pair|
+      if pair[0].ord + 1 == pair[1].ord
+        true
+      else
+        false
+      end
+    end
+    # turn alph pairs into single bool confiriming if place_alpha is consecutive
+    alphas_are_cons = if (alph_pairs_cons.uniq == [true])
+      true
+    else
+      false
+    end
+    # take this branch if ship size doesn't match num of coordinates
     if ship.length != placement.length
       false
-    elsif place_alph.uniq == 1
-      if place_num 
-
-
-      # if place_num.all? {|num| 1 || 2 || 3 || 4}
+    # take this branch if all the letters are the same
+    elsif place_alph.uniq.length == 1
+      nums_are_cons
+    # take this branch if all nums are same
+    elsif place_num.uniq.length == 1
+      alphas_are_cons
+    else
+      false
     end
   end
 end

@@ -52,7 +52,7 @@ describe Board do
     expect(board.valid_placement?(submarine, ["B1", "B2"])).to be true
   end
 
-  xit 'does not let coordinates be diagonal' do
+  it 'does not let coordinates be diagonal' do
     board = Board.new
     cruiser = Ship.new("Cruiser", 3)
     submarine = Ship.new("Submarine", 2)
@@ -62,7 +62,7 @@ describe Board do
     expect(board.valid_placement?(submarine, ["C2", "D3"])).to be false
   end
 
-  xit 'confirm placements are valid' do
+  it 'confirm placements are valid' do
     board = Board.new
     cruiser = Ship.new("Cruiser", 3)
     submarine = Ship.new("Submarine", 2)
