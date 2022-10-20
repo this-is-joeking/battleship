@@ -89,4 +89,11 @@ class Board
       false
     end
   end
+
+  def place(ship, location)
+    location.each do |cell|
+      current_cell = @cell_holder[cell]
+      @cell_holder[cell] = current_cell.place_ship(ship)
+    end
+  end
 end
