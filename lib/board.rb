@@ -77,8 +77,14 @@ attr_reader :cells
     else
       false
     end
+    # check to make sure all placements are empty
+    is_empty_location = placement.each do |cell|
+      if @cells[cell].empty? == false
+        return false
+      end
+    end
     # take this branch if ship size doesn't match num of coordinates
-    if ship.length != placement.length
+    if ship.length != placement.length || !is_empty_location
       false
     # take this branch if all the letters are the same
     elsif place_alph.uniq.length == 1
