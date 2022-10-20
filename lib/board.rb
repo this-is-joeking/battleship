@@ -1,11 +1,12 @@
 class Board
-# attr_reader :cells
+attr_reader :cells
 
   def initialize
-    @cell_holder = Hash.new(false)
+    @cells = Hash.new(false)
+    cell_maker
   end
 
-  def cells
+  def cell_maker
     board_height = 4
     board_width = 4
     # sets array of nums and letters to potentially be used extend for coordinates
@@ -24,13 +25,13 @@ class Board
     # turn the array of coordinates into hash where key is coordinate and
     # value is the cell
     array_of_coordinates.each do |location|
-      @cell_holder[location] = Cell.new(location)
+      @cells[location] = Cell.new(location)
     end
-    @cell_holder
+    @cells
   end
 
   def valid_coordinate?(location)
-    if @cell_holder[location] == false
+    if @cells[location] == false
       false
     else
       true
@@ -87,6 +88,12 @@ class Board
       alphas_are_cons
     else
       false
+    end
+  end
+
+  def place(ship, location)
+    location.each do |cell|
+      @cells[cell].place_ship(ship)
     end
   end
 end
