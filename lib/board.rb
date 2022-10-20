@@ -3,28 +3,33 @@ attr_reader :cells
 
   def initialize
     @cells = Hash.new(false)
+    @board_height = 4
+    @board_width = 4
+    @array_of_coordinates = []
+    @width_nums = []
+    @length_letters = []
     cell_maker
+
   end
 
   def cell_maker
-    board_height = 4
-    board_width = 4
+
     # sets array of nums and letters to potentially be used extend for coordinates
     alphabet = ('A'..'Z').to_a
     numbers = ('1'..'26').to_a
-    array_of_coordinates = []
+
     # sets the arrays of nums/letters to be used for coordinates
-    width_nums = numbers.first(board_width)
-    length_letters = alphabet.first(board_height)
+    @width_nums = numbers.first(@board_width)
+    @length_letters = alphabet.first(@board_height)
     # iterate through the num and letter arrays to build array of coordinates
-    length_letters.each do |letter|
-      width_nums.each do |num|
-        array_of_coordinates << letter + num
+    @length_letters.each do |letter|
+      @width_nums.each do |num|
+        @array_of_coordinates << letter + num
       end
     end
     # turn the array of coordinates into hash where key is coordinate and
     # value is the cell
-    array_of_coordinates.each do |location|
+    @array_of_coordinates.each do |location|
       @cells[location] = Cell.new(location)
     end
     @cells
@@ -101,5 +106,31 @@ attr_reader :cells
     location.each do |cell|
       @cells[cell].place_ship(ship)
     end
+  end
+
+  def render(view_ships = false)
+    board_visual = "  "
+    # iterate through our cell hash and render each cells
+    # every 4 cells do a new line and enter the appropriate letter first
+    # first print out column header nums and new line
+    @width_nums.each do |num|
+      board_visual += "#{num} "
+    end
+    board_visual += "\n"
+    counter = 0
+    # print letter and 4 cells new line repeat for each letter
+    @length_letters.each do |letter|
+      board_visual += "#{letter} "
+      @board_width.times do
+        # access the array of coordinates take that to access the key in the Hash
+        # access the @view in the cell of that coordinate
+        cell_key = @array_of_coordinates[counter]
+        board_visual += "#{@cells[cell_key].render(view_ships)} "
+        counter += 1
+      end
+      board_visual += "\n"
+    end
+    board_visual
+
   end
 end
