@@ -27,15 +27,15 @@ class Cell
     end
   end
 
-  def render(variable = false)
+  def render(view_ships = false)
     if ! empty? && ship.sunk?
       @view = "X"
     end
     @view
-      if variable == true && ! empty?
+      if view_ships == true && ! empty?
         @view = "S"
       else
         @view
-      end 
+      end
   end
 end
