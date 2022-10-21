@@ -26,7 +26,6 @@ class Cell
       ship.hit
       @view = "H"
     end
-    # require "pry"; binding.pry
   end
 
   def render(view_ships = false)

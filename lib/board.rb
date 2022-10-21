@@ -1,5 +1,6 @@
 class Board
-attr_reader :cells
+attr_reader :cells,
+            :array_of_coordinates
 
   def initialize
     @cells = Hash.new(false)
@@ -9,7 +10,6 @@ attr_reader :cells
     @width_nums = []
     @length_letters = []
     cell_maker
-
   end
 
   def cell_maker
@@ -131,6 +131,5 @@ attr_reader :cells
       board_visual += "\n"
     end
     board_visual
-
   end
 end
