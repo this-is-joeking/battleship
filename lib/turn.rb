@@ -9,4 +9,6 @@ class Turn
   def computer_fires
     @comp_board.array_of_coordinates.shuffle!.pop
   end
+
+  
 end

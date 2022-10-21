@@ -20,12 +20,15 @@ describe Turn do
 
     expect(turn.computer_fires).to be_a String
   end
+
+  it 'can take the players shot' do
+
+
+  end
 end
 
-# Will need to take coordinate from player & coordinate
-# from computer
 
-# Will need to check if valid placements (prompt again if
+# For player turn- will need to check if valid placements (prompt again if
 # invalid space)
 
 # Player turn- user inputs cell
