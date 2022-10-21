@@ -22,20 +22,20 @@ class Cell
   def fire_upon
     if @ship.nil?
       @view = "M"
-    elsif ship.hit
-        @view = "H"
+    else
+      ship.hit
+      @view = "H"
     end
+    # require "pry"; binding.pry
   end
 
   def render(view_ships = false)
-    if ! empty? && ship.sunk?
+    if !empty? && ship.sunk?
       @view = "X"
-    end
-    @view
-      if view_ships == true && ! empty?
+    elsif view_ships == true && ! empty? && @view != "H"
         @view = "S"
-      else
-        @view
-      end
+    else
+      @view
+    end
   end
 end

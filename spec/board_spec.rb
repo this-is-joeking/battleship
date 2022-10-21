@@ -136,7 +136,29 @@ describe Board do
       board.cells["A2"].fire_upon
       board.cells["A3"].fire_upon
       board.cells["D1"].fire_upon
+      expect(board.render).to eq(
+        "  1 2 3 4 \nA X X X . \nB . . . . \nC . . . . \nD M . . . \n"
+      )
+    end
+    it 'can render visual of board with multiple hits/misses/sink' do
+      board = Board.new
+      cruiser = Ship.new("Cruiser", 3)
+      submarine = Ship.new("Submarine", 2)
+      board.place(cruiser, ["A1", "A2", "A3"])
+      board.place(submarine, ["C3", "D3"])
+      board.cells["A1"].fire_upon
+      board.cells["A2"].fire_upon
+      board.cells["A3"].fire_upon
+      board.cells["D1"].fire_upon
+      board.cells["D3"].fire_upon
+
       require "pry"; binding.pry
+      expect(board.render).to eq(
+        "  1 2 3 4 \nA X X X . \nB . . . . \nC . . . . \nD M . H . \n"
+      )
+      expect(board.render(true)).to eq(
+        "  1 2 3 4 \nA X X X . \nB . . . . \nC . . S . \nD M . H . \n"
+      )
     end
   end
 end
