@@ -22,7 +22,6 @@ describe Board do
   describe '#valid_coordinate?' do
     it 'validates a coordinate' do
       board = Board.new
-      board.cells
 
       expect(board.valid_coordinate?("A1")).to be true
       expect(board.valid_coordinate?("D4")).to be true
@@ -35,7 +34,6 @@ describe Board do
       board = Board.new
       cruiser = Ship.new("Cruiser", 3)
       submarine = Ship.new("Submarine", 2)
-      board.cells
 
       expect(board.valid_placement?(cruiser, ["A1", "A2"])).to be false
       expect(board.valid_placement?(submarine, ["A2", "A3", "A4"])).to be false
@@ -46,7 +44,6 @@ describe Board do
       board = Board.new
       cruiser = Ship.new("Cruiser", 3)
       submarine = Ship.new("Submarine", 2)
-      board.cells
 
       expect(board.valid_placement?(cruiser, ["A1", "A2", "A4"])).to be false
       expect(board.valid_placement?(submarine, ["A2", "C1"])).to be false
@@ -58,7 +55,6 @@ describe Board do
       board = Board.new
       cruiser = Ship.new("Cruiser", 3)
       submarine = Ship.new("Submarine", 2)
-      board.cells
 
       expect(board.valid_placement?(cruiser, ["A1", "B2", "C3"])).to be false
       expect(board.valid_placement?(submarine, ["C2", "D3"])).to be false
@@ -68,7 +64,6 @@ describe Board do
       board = Board.new
       cruiser = Ship.new("Cruiser", 3)
       submarine = Ship.new("Submarine", 2)
-
 
       expect(board.valid_placement?(submarine, ["A1", "A2"])).to be true
       expect(board.valid_placement?(cruiser, ["B1", "C1", "D1"])).to be true
@@ -92,7 +87,6 @@ describe Board do
       board = Board.new
       cruiser = Ship.new("Cruiser", 3)
 
-      board.cell_maker
       board.place(cruiser, ["A1", "A2", "A3"])
       cell_1 = board.cells["A1"]
       cell_2 = board.cells["A2"]
@@ -107,13 +101,64 @@ describe Board do
       board = Board.new
       cruiser = Ship.new("Cruiser", 3)
 
-      board.cells
       board.place(cruiser, ["A1", "A2", "A3"])
       cell_1 = board.cells["A1"]
       cell_2 = board.cells["A2"]
       cell_3 = board.cells["A3"]
 
       expect(cell_3.ship == cell_2.ship).to eq(true)
+    end
+  end
+
+  describe '#render' do
+    it 'prints a visual of the board' do
+      board = Board.new
+      cruiser = Ship.new("Cruiser", 3)
+      board.place(cruiser, ["A1", "A2", "A3"])
+
+      expect(board.render).to eq(
+        "  1 2 3 4 \nA . . . . \nB . . . . \nC . . . . \nD . . . . \n"
+      )
+      expect(board.render(true)).to eq(
+        "  1 2 3 4 \nA S S S . \nB . . . . \nC . . . . \nD . . . . \n"
+      )
+    end
+
+    it 'can render visual of board with hits/misses' do
+      board = Board.new
+      cruiser = Ship.new("Cruiser", 3)
+      board.place(cruiser, ["A1", "A2", "A3"])
+      board.cells["A1"].fire_upon
+
+      expect(board.render).to eq(
+        "  1 2 3 4 \nA H . . . \nB . . . . \nC . . . . \nD . . . . \n"
+      )
+      board.cells["A2"].fire_upon
+      board.cells["A3"].fire_upon
+      board.cells["D1"].fire_upon
+      expect(board.render).to eq(
+        "  1 2 3 4 \nA X X X . \nB . . . . \nC . . . . \nD M . . . \n"
+      )
+    end
+    it 'can render visual of board with multiple hits/misses/sink' do
+      board = Board.new
+      cruiser = Ship.new("Cruiser", 3)
+      submarine = Ship.new("Submarine", 2)
+      board.place(cruiser, ["A1", "A2", "A3"])
+      board.place(submarine, ["C3", "D3"])
+      board.cells["A1"].fire_upon
+      board.cells["A2"].fire_upon
+      board.cells["A3"].fire_upon
+      board.cells["D1"].fire_upon
+      board.cells["D3"].fire_upon
+
+      require "pry"; binding.pry
+      expect(board.render).to eq(
+        "  1 2 3 4 \nA X X X . \nB . . . . \nC . . . . \nD M . H . \n"
+      )
+      expect(board.render(true)).to eq(
+        "  1 2 3 4 \nA X X X . \nB . . . . \nC . . S . \nD M . H . \n"
+      )
     end
   end
 end
