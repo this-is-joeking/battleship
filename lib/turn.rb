@@ -10,8 +10,9 @@ class Turn
   end
 
   def computer_aims
-    @computers_shot = @player_board.array_of_coordinates.shuffle!.pop
-    "A1" 
+    computers_potential_shots = @player_board.array_of_coordinates.shuffle
+    @computers_shot = computers_potential_shots.pop
+    "A1"
     # ^^^ this is used for testing computers cell selection
   end
 
@@ -31,5 +32,6 @@ class Turn
     puts "===============YOUR BOARD==============="
     puts player_board.render(true)
   end
+
 
 end
