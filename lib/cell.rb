@@ -32,7 +32,7 @@ class Cell
     if !empty? && ship.sunk?
       @view = "X"
     elsif view_ships == true && ! empty? && @view != "H"
-        @view = "S"
+      @view = "S"
     else
       @view
     end
