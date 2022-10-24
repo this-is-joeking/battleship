@@ -1,17 +1,18 @@
 class Game
+  attr_reader :comp_board,
+              :first_coord
 
   def initialize
-    # creates boards
     @comp_board = Board.new
     @player_board = Board.new
 
-    # creates ships
     @cruiser_comp = Ship.new("Cruiser", 3)
     @submarine_comp = Ship.new("Submarine", 2)
     @cruiser_player = Ship.new("Cruiser", 3)
     @submarine_player = Ship.new("Submarine", 2)
-  end
 
+    @first_coord = ""
+  end
 
   def start
     puts "I have laid out my ships on the grid."
@@ -20,16 +21,27 @@ class Game
     puts @player_board.render
   end
 
-  def find_first_comp_coord
-    comp_ship = @comp_board.array_of_coordinates.shuffle.pop
-    while !@comp_board.cells[comp_ship].empty?
-      comp_ship = @comp_board.array_of_coordinates.pop
-    end
-    @comp_board.cells[comp_ship]
+  def first_comp_coord
+    @first_coord = @comp_board.array_of_coordinates.shuffle!.pop
   end
 
-# look for next adjacent, consecutive cell
+  def find_first_comp_coord
+    first_comp_coord
+    while !@comp_board.cells[@first_coord].empty?
+      first_comp_coord
+    end
+    @first_coord
+  end
 
+  def adjacent_cell?(cell)
+    @comp_board.valid_placement?(@submarine_comp, [find_first_comp_coord, cell].sort)
+  end
+
+  def adjacent_cells
+    @comp_board.array_of_coordinates.map do |cell|
+      cell if adjacent_cell?(cell) == true
+    end
+  end
 
   def setup_cruiser
     puts "Enter the squares for the Cruiser (3 spaces):"

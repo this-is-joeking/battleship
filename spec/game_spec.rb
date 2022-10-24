@@ -13,9 +13,14 @@ describe Game do
       second_cell = game.find_first_comp_coord
       third_cell = game.find_first_comp_coord
 
-      expect(first_cell.empty?).to eq true
-      expect(second_cell.empty?).to eq true
-      expect(third_cell.empty?).to eq true
+      expect(game.comp_board.cells[first_cell].empty?).to eq true
+      # expect(second_cell.empty?).to eq true
     end
   end
+
+  # describe '#adjacent_cell' do
+  #   xit 'finds an adjacent cell next to the empty coordinate' do
+  #
+  #   expect()
+  # end
 end
