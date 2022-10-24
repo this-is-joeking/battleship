@@ -50,7 +50,7 @@ describe Turn do
   end
 
   describe '#computer_fires' do
-    it 'can take the computers shot' do
+    xit 'can take the computers shot' do
       comp_board = Board.new
       player_board = Board.new
       turn = Turn.new("A1", comp_board, player_board)
@@ -60,7 +60,7 @@ describe Turn do
       expect(turn.player_board.cells["A1"].view).to eq("M")
     end
 
-    it 'can hit a ship on the players board' do
+    xit 'can hit a ship on the players board' do
       comp_board = Board.new
       player_board = Board.new
       cruiser = Ship.new("Cruiser", 3)
@@ -94,7 +94,7 @@ describe Turn do
   end
 
   describe '#comp_feedback' do
-    it 'tells the player results of the computers shot' do
+    xit 'tells the player results of the computers shot' do
       comp_board = Board.new
       player_board = Board.new
       cruiser = Ship.new("Cruiser", 3)
