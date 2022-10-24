@@ -10,10 +10,6 @@ class Game
     @submarine_comp = Ship.new("Submarine", 2)
     @cruiser_player = Ship.new("Cruiser", 3)
     @submarine_player = Ship.new("Submarine", 2)
-
-    # places ships for computer
-    @comp_board.place(@cruiser_comp, ["A1", "B1", "C1"])
-    @comp_board.place(@submarine_comp, ["B3", "B4"])
   end
 
 
@@ -23,6 +19,17 @@ class Game
     puts "The Cruiser is three units long and the Submarine is two units long."
     puts @player_board.render
   end
+
+  def find_first_comp_coord
+    comp_ship = @comp_board.array_of_coordinates.shuffle.pop
+    while !@comp_board.cells[comp_ship].empty?
+      comp_ship = @comp_board.array_of_coordinates.pop
+    end
+    @comp_board.cells[comp_ship]
+  end
+
+# look for next adjacent, consecutive cell
+
 
   def setup_cruiser
     puts "Enter the squares for the Cruiser (3 spaces):"
