@@ -13,11 +13,9 @@ attr_reader :cells,
   end
 
   def cell_maker
-
     # sets array of nums and letters to potentially be used extend for coordinates
     alphabet = ('A'..'Z').to_a
     numbers = ('1'..'26').to_a
-
     # sets the arrays of nums/letters to be used for coordinates
     @width_nums = numbers.first(@board_width)
     @length_letters = alphabet.first(@board_height)
@@ -43,10 +41,13 @@ attr_reader :cells,
     end
   end
 
-  def valid_placement?(ship, placement)
-    place_alph = placement.map do |location|
+  def place_alph(placement)
+    placement.map do |location|
       location[0]
     end
+  end
+
+  def valid_placement?(ship, placement)
     place_num = placement.map do |location|
       location[1].to_i
     end
@@ -67,7 +68,7 @@ attr_reader :cells,
       false
     end
     # build array of letter pairs
-    alph_pairs = place_alph.each_cons(2).to_a
+    alph_pairs = place_alph(placement).each_cons(2).to_a
     # create array checking each pair of letters is consecutive
     alph_pairs_cons = alph_pairs.map do |pair|
       if pair[0].ord + 1 == pair[1].ord
@@ -92,7 +93,7 @@ attr_reader :cells,
     if ship.length != placement.length || !is_empty_location
       false
     # take this branch if all the letters are the same
-    elsif place_alph.uniq.length == 1
+  elsif place_alph(placement).uniq.length == 1
       nums_are_cons
     # take this branch if all nums are same
     elsif place_num.uniq.length == 1
