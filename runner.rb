@@ -18,6 +18,7 @@ end
 
 if input == "p"
   game = Game.new
+  #comp sets ships
   game.start
   game.setup_cruiser
   game.setup_sub
