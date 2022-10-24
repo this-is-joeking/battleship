@@ -11,8 +11,9 @@ input = gets.chomp
 
 while input != "p" && input != "q"
   puts "Mind your ps and qs. Try again"
+  #move the strings to a method
   puts "Enter p to play. Enter q if you are a quitter"
-  input = gets.chomp
+  input = gets.chomp.downcase
 end
 
 if input == "p"
@@ -24,8 +25,6 @@ if input == "p"
   game.take_turn
 elsif input == "q"
   puts "Come back again soon :("
-else
-  puts "error"
 end
 
 
