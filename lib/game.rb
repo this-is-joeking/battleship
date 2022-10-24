@@ -22,15 +22,8 @@ class Game
   end
 
   def first_comp_coord
-    @first_coord = @comp_board.array_of_coordinates.shuffle!.pop
-  end
-
-  def find_first_comp_coord
-    first_comp_coord
-    while !@comp_board.cells[@first_coord].empty?
-      first_comp_coord
-    end
-    @first_coord
+    possible_first_coord = @comp_board.array_of_coordinates
+    @first_coord = possible_first_coord.sample
   end
 
   def adjacent_cell?(cell)
@@ -38,9 +31,12 @@ class Game
   end
 
   def adjacent_cells
-    @comp_board.array_of_coordinates.map do |cell|
-      cell if adjacent_cell?(cell) == true
+    adjacent_array = @comp_board.array_of_coordinates.map do |cell|
+      if adjacent_cell?(cell) == true
+        cell
+      end
     end
+    adjacent_array.compact!
   end
 
   def setup_cruiser
