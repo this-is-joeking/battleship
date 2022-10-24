@@ -9,7 +9,7 @@ describe Board do
 
     expect(board).to be_a Board
   end
-  # tests the cell_maker
+
   it 'holds a hash of 16 cells' do
     board = Board.new
 
@@ -29,6 +29,23 @@ describe Board do
       expect(board.valid_coordinate?("E1")).to be false
     end
   end
+
+  describe '#place_alph' do
+    it 'it splits coordinate by first location in string' do
+      board = Board.new
+
+      expect(board.place_alph(["A1", "A2", "A3"])).to eq(["A", "A", "A"])
+    end
+  end
+
+  describe '#place_num' do
+    it 'it splits coordinate by second locaiton in string' do
+      board = Board.new
+
+      expect(board.place_num(["A1", "A2", "A3"])).to eq([1, 2, 3])
+    end
+  end
+
   describe '#valid_placement?' do
     it 'validates length of the ship' do
       board = Board.new

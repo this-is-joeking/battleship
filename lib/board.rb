@@ -47,12 +47,15 @@ attr_reader :cells,
     end
   end
 
-  def valid_placement?(ship, placement)
-    place_num = placement.map do |location|
+  def place_num(placement)
+    placement.map do |location|
       location[1].to_i
     end
+  end
+
+  def valid_placement?(ship, placement)
     # build array of num array pairs
-    num_pairs = place_num.each_cons(2).to_a
+    num_pairs = place_num(placement).each_cons(2).to_a
     # create array checking each pair is consecutive
     num_pairs_cons = num_pairs.map do |pair|
       if pair[0] + 1 == pair[1]
@@ -93,13 +96,13 @@ attr_reader :cells,
     if ship.length != placement.length || !is_empty_location
       false
     # take this branch if all the letters are the same
-  elsif place_alph(placement).uniq.length == 1
-      nums_are_cons
-    # take this branch if all nums are same
-    elsif place_num.uniq.length == 1
-      alphas_are_cons
-    else
-      false
+    elsif place_alph(placement).uniq.length == 1
+        nums_are_cons
+      # take this branch if all nums are same
+    elsif place_num(placement).uniq.length == 1
+        alphas_are_cons
+      else
+        false
     end
   end
 
