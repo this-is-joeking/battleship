@@ -22,12 +22,16 @@ class Game
   end
 
   def first_comp_coord
-    possible_first_coord = @comp_board.array_of_coordinates
-    @first_coord = possible_first_coord.sample
+    possible_first_coord = @comp_board.array_of_coordinates.shuffle
+    @first_coord = possible_first_coord.pop
+    while comp_board.cells[@first_coord].empty? == false
+      @first_coord = possible_first_coord.pop
+    end
+    @first_coord
   end
 
   def adjacent_cell?(cell)
-    @comp_board.valid_placement?(@submarine_comp, [find_first_comp_coord, cell].sort)
+    @comp_board.valid_placement?(@submarine_comp, [@first_coord, cell].sort)
   end
 
   def adjacent_cells
@@ -37,6 +41,48 @@ class Game
       end
     end
     adjacent_array.compact!
+  end
+
+  def third_adjacent_cell?(cell2, cell3)
+    @comp_board.valid_placement?(@cruiser_comp, [@first_coord, cell2, cell3].sort)
+  end
+
+  def three_adjacent_cells
+    # go thru each of the adjacent array elements and check if
+    # each of the array of coordinates is adjacent?
+    array_of_placements = []
+    adjacent_cells.each do |cell2|
+      @comp_board.array_of_coordinates.each do |cell3|
+        if third_adjacent_cell?(cell2, cell3) == true
+          array_of_placements<< [@first_coord, cell2, cell3].sort
+        end
+      end
+    end
+    array_of_placements.uniq
+  end
+
+  def place_comp_cruiser
+    comp_board.place(@cruiser_comp, three_adjacent_cells.sample)
+    first_comp_coord
+  end
+
+  def two_adjacent_cells
+    array_of_placements = []
+    adjacent_cells.each do |cell|
+      array_of_placements << [@first_coord, cell].sort
+    end
+    array_of_placements
+  end
+
+  def place_comp_sub
+    comp_board.place(@submarine_comp, two_adjacent_cells.sample)
+    first_comp_coord
+  end
+
+  def place_comp_ships
+    first_comp_coord
+    place_comp_sub
+    place_comp_cruiser
   end
 
   def setup_cruiser
@@ -80,7 +126,32 @@ class Game
       players_shot = gets.chomp
     end
     turn = Turn.new(players_shot, @comp_board, @player_board)
-
+    turn.computer_fires
+    turn.player_fires
+    turn.player_feedback
+    turn.comp_feedback
+    display_boards
   end
+
+  def comp_ships_sunk?
+    @cruiser_comp.sunk? && @submarine_comp.sunk?
+  end
+
+  def player_ships_sunk?
+    @cruiser_player.sunk? && @submarine_player.sunk?
+  end
+
+  def game_over?
+    player_ships_sunk? == true || comp_ships_sunk? == true
+  end
+
+  def winner_is
+    if player_ships_sunk? == true
+      puts "I won (you lose)"
+    elsif comp_ships_sunk? == true
+      puts "You won! Congrats"
+    end
+  end
+
 
 end

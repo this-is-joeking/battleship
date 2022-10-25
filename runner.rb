@@ -22,8 +22,13 @@ if input == "p"
   game.start
   game.setup_cruiser
   game.setup_sub
+  game.place_comp_ships
   game.display_boards
   game.take_turn
+  while game.game_over? == false
+    game.take_turn
+  end
+  game.winner_is
 elsif input == "q"
   puts "Come back again soon :("
 end
