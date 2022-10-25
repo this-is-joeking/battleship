@@ -7,7 +7,6 @@ require './lib/game'
 game = Game.new
 game.menu
 
-
 if game.input == "p"
   while game.input == "p"
     game = Game.new
@@ -25,8 +24,3 @@ if game.input == "p"
 elsif game.input == "q"
   puts "Come back again soon :("
 end
-
-
-## need to go back to valid_placement? method on board class to define what
-## should happen if the input is not coordinates at all or if letters are
-## downcase

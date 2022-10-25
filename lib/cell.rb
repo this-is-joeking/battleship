@@ -1,5 +1,8 @@
 class Cell
-  attr_reader :coordinate, :ship, :view
+  attr_reader :coordinate,
+              :ship,
+              :view,
+              :has_been_fired_upon
 
   def initialize(location)
     @coordinate = location
