@@ -31,6 +31,7 @@ describe Turn do
 
       expect(turn.comp_board.cells["A1"].view).to eq(".")
       turn.player_fires
+      turn.comp_board.render
       expect(turn.comp_board.cells["A1"].view).to eq("M")
     end
 
@@ -45,6 +46,7 @@ describe Turn do
 
       expect(turn.comp_board.cells["A1"].view).to eq(".")
       turn.player_fires
+      turn.comp_board.render
       expect(turn.comp_board.cells["A1"].view).to eq("H")
     end
   end
@@ -88,6 +90,7 @@ describe Turn do
       turn = Turn.new("A1", comp_board, player_board)
       turn.player_fires
       turn.computer_fires
+      turn.comp_board.render 
 
       expect(turn.player_feedback).to eq("Your shot on A1 was a hit!")
     end
