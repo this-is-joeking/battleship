@@ -185,6 +185,17 @@ describe Board do
     end
   end
 
+  describe '#valid_coordinates?' do
+    it 'checks if each placement is a valid coordinate' do
+      board = Board.new
+
+      expect(board.valid_coordinates?(["A2", "A3", "A4"])).to be true
+      expect(board.valid_coordinates?(["A2", "A3", "A6"])).to be false
+      expect(board.valid_coordinates?(["A2", "A3"])).to be true
+      expect(board.valid_coordinates?(["A2", "A5"])).to be false  
+    end
+  end
+
   describe '#valid_placement?' do
     it 'validates length of the ship' do
       board = Board.new

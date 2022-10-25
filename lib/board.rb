@@ -1,6 +1,6 @@
 class Board
-attr_reader :cells,
-            :array_of_coordinates
+  attr_reader :cells,
+              :array_of_coordinates
 
   def initialize
     @cells = Hash.new(false)
@@ -102,8 +102,21 @@ attr_reader :cells,
     end
   end
 
+  def valid_coordinates?(placement)
+    valid_coords = placement.map do |cell|
+      if valid_coordinate?(cell) == false
+        return false
+      elsif valid_coordinate?(cell) == true
+        true
+      end
+    end
+    valid_coords.uniq[0]
+  end
+
   def valid_placement?(ship, placement)
-    if ship.length != placement.length || !is_empty_location(placement)
+    if !valid_coordinates?(placement)
+      false
+    elsif ship.length != placement.length || !is_empty_location(placement)
       false
     elsif place_alph(placement).uniq.length == 1
       nums_are_cons?(placement)
