@@ -82,23 +82,6 @@ describe Cell do
 
       expect(cell.ship.health).to eq 2
     end
-
-    it 'changes the view after fire_upon' do
-      cell = Cell.new("C3")
-      cruiser = Ship.new("Cruiser", 3)
-
-      expect(cell.view).to eq "."
-      cell.fire_upon
-      expect(cell.view).to eq "M"
-
-      cell.place_ship(cruiser)
-      cell.fire_upon
-      expect(cell.view).to eq "H"
-
-      cell.fire_upon
-      cell.fire_upon
-      expect(cell.view).to eq "X"
-    end
   end
 
   describe '#render' do
