@@ -86,11 +86,11 @@ attr_reader :cells,
     end
   end
 
-  def nums_are_cons(placement)
+  def nums_are_cons?(placement)
     num_pairs_cons(placement).uniq == [true]
   end
 
-  def alphas_are_cons(placement)
+  def alphas_are_cons?(placement)
     alph_pairs_cons(placement).uniq == [true]
   end
 
@@ -106,9 +106,9 @@ attr_reader :cells,
     if ship.length != placement.length || !is_empty_location(placement)
       false
     elsif place_alph(placement).uniq.length == 1
-      nums_are_cons(placement)
+      nums_are_cons?(placement)
     elsif place_num(placement).uniq.length == 1
-      alphas_are_cons(placement)
+      alphas_are_cons?(placement)
     else
       false
     end
