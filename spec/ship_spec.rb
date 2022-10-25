@@ -59,32 +59,33 @@ RSpec.describe Ship do
     end
   end
 
-  # Test is sunk when hits equal health
-  it 'is sunk' do
-    cruiser = Ship.new("Cruiser", 3)
-    battleship = Ship.new("Battleship", 4)
+  describe '#sunk?' do
+    it 'can confirm if ship is not sunk when health is > 0' do
+      cruiser = Ship.new("Cruiser", 3)
+      battleship = Ship.new("Battleship", 4)
 
-    cruiser.hit
-    battleship.hit
+      cruiser.hit
+      battleship.hit
 
-    expect(cruiser.sunk?).to be false
-    expect(battleship.sunk?).to be false
-  end
+      expect(cruiser.sunk?).to be false
+      expect(battleship.sunk?).to be false
+    end
 
-  it 'is sunk' do
-    cruiser = Ship.new("Cruiser", 3)
-    battleship = Ship.new("Battleship", 4)
+    it 'can confirm when ship is sunk when health is 0' do
+      cruiser = Ship.new("Cruiser", 3)
+      battleship = Ship.new("Battleship", 4)
 
-    cruiser.hit
-    cruiser.hit
-    cruiser.hit
+      cruiser.hit
+      cruiser.hit
+      cruiser.hit
 
-    battleship.hit
-    battleship.hit
-    battleship.hit
-    battleship.hit
+      battleship.hit
+      battleship.hit
+      battleship.hit
+      battleship.hit
 
-    expect(cruiser.sunk?).to be true
-    expect(battleship.sunk?).to be true
-  end
+      expect(cruiser.sunk?).to be true
+      expect(battleship.sunk?).to be true
+    end
+  end 
 end
