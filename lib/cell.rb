@@ -39,7 +39,7 @@ class Cell
       @view = "X"
     elsif !empty? && !ship.sunk? && fired_upon?
       @view = "H"
-    elsif view_ships == true && ! empty? && @view != "H"
+    elsif view_ships == true && !empty? && @view != "H"
       @view = "S"
     else
       @view
