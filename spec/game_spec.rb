@@ -46,7 +46,7 @@ describe Game do
     it 'finds an adjacent cell next to the first 2 adjacent cells' do
       game = Game.new
       game.first_comp_coord
-      require "pry"; binding.pry
+
       expect(game.third_adjacent_cell?("A3", "A4")).to be(true).or be(false)
     end
   end

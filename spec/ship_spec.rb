@@ -2,8 +2,6 @@ require 'rspec'
 require './lib/ship'
 
 RSpec.describe Ship do
-
-  # Test it can create new ships
   it 'exits' do
     cruiser = Ship.new("Cruiser", 3)
     battleship = Ship.new("Battleship", 4)
@@ -14,7 +12,6 @@ RSpec.describe Ship do
     expect(destroyer).to be_instance_of(Ship)
   end
 
-  # Test the ship has a name
   it 'has a name' do
     cruiser = Ship.new("Cruiser", 3)
     battleship = Ship.new("Battleship", 4)
@@ -25,7 +22,6 @@ RSpec.describe Ship do
     expect(destroyer.name).to eq("Destroyer")
   end
 
-  # Test the ship has length
   it 'has length' do
     cruiser = Ship.new("Cruiser", 3)
     battleship = Ship.new("Battleship", 4)
@@ -36,7 +32,6 @@ RSpec.describe Ship do
     expect(destroyer.length).to eq(2)
   end
 
-  # Test the ship has health (should equal the length)
   it 'has health' do
     cruiser = Ship.new("Cruiser", 3)
     battleship = Ship.new("Battleship", 4)
@@ -45,16 +40,23 @@ RSpec.describe Ship do
     expect(battleship.health).to eq(4)
   end
 
-  # Test health goes down one when hit
-  it 'has health' do
-    cruiser = Ship.new("Cruiser", 3)
-    battleship = Ship.new("Battleship", 4)
+  describe '#hit' do
+    it 'reduces health' do
+      cruiser = Ship.new("Cruiser", 3)
+      battleship = Ship.new("Battleship", 4)
 
-    cruiser.hit
-    battleship.hit
+      cruiser.hit
+      battleship.hit
 
-    expect(cruiser.health).to eq(2)
-    expect(battleship.health).to eq(3)
+      expect(cruiser.health).to eq(2)
+      expect(battleship.health).to eq(3)
+
+      cruiser.hit
+      battleship.hit
+
+      expect(cruiser.health).to eq(1)
+      expect(battleship.health).to eq(2)
+    end
   end
 
   # Test is sunk when hits equal health

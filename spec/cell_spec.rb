@@ -79,6 +79,7 @@ describe Cell do
 
       expect(cell.ship.health).to eq 2
     end
+
   end
 
   describe '#render' do

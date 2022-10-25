@@ -17,6 +17,41 @@ describe Board do
     expect(board.cells.length).to eq 16
     expect(board.cells["A1"]).to be_a Cell
     expect(board.cells["D4"]).to be_a Cell
+    expect(board.cells["A5"]).to eq false
+  end
+
+  describe '#alphabet' do
+    it 'creates an array of the alphabet' do
+      board = Board.new
+
+      expect(board.alphabet).to eq([ 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L',
+        'M', 'N', 'O', 'P', 'Q', 'R',  'S', 'T', 'U', 'V', 'W', 'X',
+        'Y', 'Z' ])
+    end
+  end
+
+  describe '#numbers' do
+    it 'creates an array of numbers' do
+      board = Board.new
+
+      expect(board.numbers).to eq (['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26'])
+    end
+  end
+
+  describe '#width_nums' do
+    it 'creates array of nums to be used in coordinates' do
+      board = Board.new
+
+      expect(board.width_nums).to eq(['1', '2', '3', '4'])
+    end
+  end
+
+  describe '#length_letters' do
+    it 'creates array of letters to be used in coordinates' do
+      board = Board.new
+
+      expect(board.length_letters).to eq(['A', 'B', 'C', 'D'])
+    end
   end
 
   describe '#valid_coordinate?' do
