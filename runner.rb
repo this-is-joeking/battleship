@@ -4,27 +4,25 @@ require './lib/board'
 require './lib/turn'
 require './lib/game'
 
+game = Game.new
+game.menu
 
-puts "WELCOME TO BATTLESHIP"
-puts "Enter p to play. Enter q if you are a quitter"
-input = gets.chomp
 
-while input != "p" && input != "q"
-  puts "Mind your ps and qs. Try again"
-  #move the strings to a method
-  puts "Enter p to play. Enter q if you are a quitter"
-  input = gets.chomp.downcase
-end
-
-if input == "p"
-  game = Game.new
-  #comp sets ships
-  game.start
-  game.setup_cruiser
-  game.setup_sub
-  game.display_boards
-  game.take_turn
-elsif input == "q"
+if game.input == "p"
+  while game.input == "p"
+    game = Game.new
+    game.start
+    game.setup_cruiser
+    game.setup_sub
+    game.place_comp_ships
+    game.display_boards
+    game.take_turn
+    while game.game_over? == false
+      game.take_turn
+    end
+    game.winner_is
+  end
+elsif game.input == "q"
   puts "Come back again soon :("
 end
 
