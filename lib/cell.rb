@@ -24,7 +24,11 @@ class Cell
       @view = "M"
     else
       ship.hit
-      @view = "H"
+      if @ship.sunk?
+        @view = "X"
+      else
+        @view = "H"
+      end
     end
   end
 

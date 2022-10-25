@@ -1,6 +1,7 @@
 class Game
   attr_reader :comp_board,
-              :first_coord
+              :first_coord,
+              :input
 
   def initialize
     @comp_board = Board.new
@@ -12,6 +13,20 @@ class Game
     @submarine_player = Ship.new("Submarine", 2)
 
     @first_coord = ""
+    @input = ""
+  end
+
+  def menu
+    puts "WELCOME TO BATTLESHIP"
+    puts "Enter p to play. Enter q if you are a quitter"
+    @input = gets.chomp
+
+    while input != "p" && input != "q"
+      puts "Mind your ps and qs. Try again"
+      #move the strings to a method
+      puts "Enter p to play. Enter q if you are a quitter"
+      @input = gets.chomp.downcase
+    end
   end
 
   def start
@@ -48,8 +63,6 @@ class Game
   end
 
   def three_adjacent_cells
-    # go thru each of the adjacent array elements and check if
-    # each of the array of coordinates is adjacent?
     array_of_placements = []
     adjacent_cells.each do |cell2|
       @comp_board.array_of_coordinates.each do |cell3|
@@ -151,6 +164,7 @@ class Game
     elsif comp_ships_sunk? == true
       puts "You won! Congrats"
     end
+    menu
   end
 
 
