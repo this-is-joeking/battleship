@@ -48,7 +48,15 @@ describe Cell do
       expect(cell.ship).to eq(cruiser)
     end
 
-    # need another test with the Sub ship?
+    it 'can have a ship placed in a cell' do
+      cell = Cell.new("C3")
+      submarine = Ship.new("Submarine", 2)
+
+      expect(cell.ship).to eq nil
+      cell.place_ship(submarine)
+
+      expect(cell.ship).to eq(submarine)
+    end 
   end
 
   describe '#fired_upon?' do
@@ -141,6 +149,5 @@ describe Cell do
 
       expect(cell_2.render(true)).to eq(".")
     end
-
   end
 end
