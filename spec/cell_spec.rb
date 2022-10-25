@@ -3,7 +3,6 @@ require './lib/ship'
 require './lib/cell'
 
 describe Cell do
-
   it 'exists' do
     cell = Cell.new("A3")
 
@@ -42,10 +41,22 @@ describe Cell do
     it 'can have a ship placed in a cell' do
       cell = Cell.new("C3")
       cruiser = Ship.new("Cruiser", 3)
+
+      expect(cell.ship).to eq nil
       cell.place_ship(cruiser)
 
-      expect(cell.ship).to be_a Ship
+      expect(cell.ship).to eq(cruiser)
     end
+
+    it 'can have a ship placed in a cell' do
+      cell = Cell.new("C3")
+      submarine = Ship.new("Submarine", 2)
+
+      expect(cell.ship).to eq nil
+      cell.place_ship(submarine)
+
+      expect(cell.ship).to eq(submarine)
+    end 
   end
 
   describe '#fired_upon?' do
@@ -68,7 +79,7 @@ describe Cell do
   end
 
   describe '#fire_upon' do
-    it 'makes the ship in the cell take a hit' do
+    it 'decreases health' do
       cell = Cell.new("C3")
       cruiser = Ship.new("Cruiser", 3)
       cell.place_ship(cruiser)
@@ -79,7 +90,6 @@ describe Cell do
 
       expect(cell.ship.health).to eq 2
     end
-
   end
 
   describe '#render' do
@@ -139,6 +149,5 @@ describe Cell do
 
       expect(cell_2.render(true)).to eq(".")
     end
-
   end
 end

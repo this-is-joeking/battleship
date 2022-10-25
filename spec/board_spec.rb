@@ -81,6 +81,121 @@ describe Board do
     end
   end
 
+  describe '#valid_coordinate' do
+    it 'can tell if the cell is on the board' do
+      board = Board.new
+
+      expect(board.valid_coordinate?("A2")).to be true
+      expect(board.valid_coordinate?("D6")).to be false
+    end
+  end
+
+  describe '#place_alph' do
+    it 'can make an array of the letters of the coordinates' do
+      board = Board.new
+
+      expect(board.place_alph(["A2", "A3", "A4"])).to eq(["A", "A", "A"])
+      expect(board.place_alph(["A2", "B2", "C2"])).to eq(["A", "B", "C"])
+    end
+  end
+
+  describe '#place_num' do
+    it 'can make an array of the numbers as integers of the coordinates' do
+      board = Board.new
+
+      expect(board.place_num(["A2", "A3", "A4"])).to eq([2, 3, 4])
+      expect(board.place_num(["A2", "B2", "C2"])).to eq([2, 2, 2])
+    end
+  end
+
+  describe '#num_pairs' do
+    it 'separates the integers from the coordinates and pairs to arrays' do
+      board = Board.new
+
+      expect(board.num_pairs(["A2", "A3", "A4"])).to eq([[2, 3], [3, 4]])
+      expect(board.num_pairs(["B4", "C4"])).to eq([[4, 4]])
+      expect(board.num_pairs(["C1", "C2", "C3"])).to eq([[1, 2], [2, 3]])
+    end
+  end
+
+  describe '#num_pairs_cons' do
+    it 'checks each pair if consecutive and returns array of boolean' do
+      board = Board.new
+
+      expect(board.num_pairs_cons(["A2", "A3", "A4"])).to eq([true, true])
+      expect(board.num_pairs_cons(["A1", "A2", "A4"])).to eq([true, false])
+      expect(board.num_pairs_cons(["B1", "C1", "D1"])).to eq([false, false])
+    end
+  end
+
+  describe '#alph_pairs' do
+    it 'separates the letters from the coordinates and pairs to arrays' do
+      board = Board.new
+
+      expect(board.alph_pairs(["A2", "A3", "A4"])).to eq([["A", "A"], ["A", "A"]])
+      expect(board.alph_pairs(["B4", "C4"])).to eq([["B", "C"]])
+      expect(board.alph_pairs(["A1", "B1", "C1"])).to eq([["A", "B"], ["B", "C"]])
+    end
+  end
+
+  describe '#alph_pairs_cons' do
+    it 'checks each pair if consecutive and returns array of boolean' do
+      board = Board.new
+
+      expect(board.alph_pairs_cons(["A2", "A3", "A4"])).to eq([false, false])
+      expect(board.alph_pairs_cons(["A1", "B2", "A4"])).to eq([true, false])
+      expect(board.alph_pairs_cons(["B1", "C1", "D1"])).to eq([true, true])
+    end
+  end
+
+  describe '#nums_are_cons?' do
+    it 'confirms if all of the numbers are consecutive' do
+      board = Board.new
+
+      expect(board.nums_are_cons?(["A2", "A3", "A4"])).to be true
+      expect(board.nums_are_cons?(["A1", "A2", "A4"])).to be false
+      expect(board.nums_are_cons?(["B1", "C1", "D1"])).to be false
+    end
+  end
+
+  describe '#alphas_are_cons?' do
+    it 'confirms if all of the letters are consecutive' do
+      board = Board.new
+
+      expect(board.alphas_are_cons?(["A2", "A3", "A4"])).to be false
+      expect(board.alphas_are_cons?(["A1", "B2", "A4"])).to be false
+      expect(board.alphas_are_cons?(["B1", "C1", "D1"])).to be true
+    end
+  end
+
+  describe '#is_empty_location' do
+    it 'confirms if all of the coordinates are empty and returns original array' do
+      board = Board.new
+      cruiser = Ship.new("Cruiser", 3)
+
+      expect(board.is_empty_location(["A2", "A3", "A4"])).to eq(["A2", "A3", "A4"])
+    end
+
+    it 'returns false if all of the coordinates are not empty' do
+      board = Board.new
+      cruiser = Ship.new("Cruiser", 3)
+
+      board.place(cruiser, ["A1", "A2", "A3"])
+      expect(board.is_empty_location(["A2", "A3", "A4"])).to be false
+    end
+  end
+
+  describe '#valid_coordinates?' do
+    it 'checks if each placement is a valid coordinate' do
+      board = Board.new
+
+      expect(board.valid_coordinates?(["A2", "A3", "A4"])).to be true
+      expect(board.valid_coordinates?(["A2", "A3", "A6"])).to be false
+      expect(board.valid_coordinates?(["A2", "A3"])).to be true
+      expect(board.valid_coordinates?(["A2", "A5"])).to be false  
+    end
+  end
+
   describe '#valid_placement?' do
     it 'validates length of the ship' do
       board = Board.new
@@ -120,18 +235,6 @@ describe Board do
       expect(board.valid_placement?(submarine, ["A1", "A2"])).to be true
       expect(board.valid_placement?(cruiser, ["B1", "C1", "D1"])).to be true
     end
-
-    it 'checks to see if there is already ship in the cell(s)' do
-      board = Board.new
-      cruiser = Ship.new("Cruiser", 3)
-      submarine = Ship.new("Submarine", 2)
-
-      expect(board.valid_placement?(cruiser, ["A1", "A2", "A3"])).to be true
-      board.place(cruiser, ['A1', 'A2', 'A3'])
-
-      expect(board.valid_placement?(submarine, ["A1", "A2"])).to be false
-      expect(board.valid_placement?(submarine, ["B1", "B2"])).to be true
-    end
   end
 
   describe '#place' do
@@ -144,9 +247,9 @@ describe Board do
       cell_2 = board.cells["A2"]
       cell_3 = board.cells["A3"]
 
-      expect(cell_1.ship).to be_a(Ship)
-      expect(cell_2.ship).to be_a(Ship)
-      expect(cell_3.ship).to be_a(Ship)
+      expect(cell_1.ship).to eq(cruiser)
+      expect(cell_2.ship).to eq(cruiser)
+      expect(cell_3.ship).to eq(cruiser)
     end
 
     it 'can hold same ship in multiple cells' do
@@ -158,7 +261,7 @@ describe Board do
       cell_2 = board.cells["A2"]
       cell_3 = board.cells["A3"]
 
-      expect(cell_3.ship == cell_2.ship).to eq(true)
+      expect(cell_3.ship == cell_2.ship).to be true
     end
   end
 
@@ -174,7 +277,7 @@ describe Board do
         "  1 2 3 4 \nA S S S . \nB . . . . \nC . . . . \nD . . . . \n")
     end
 
-    it 'can render visual of board with hits/misses' do
+    it 'can render visual of board with hits, misses, and sunk' do
       board = Board.new
       cruiser = Ship.new("Cruiser", 3)
       board.place(cruiser, ["A1", "A2", "A3"])
@@ -190,7 +293,7 @@ describe Board do
         "  1 2 3 4 \nA X X X . \nB . . . . \nC . . . . \nD M . . . \n")
     end
 
-    it 'can render visual of board with multiple hits/misses/sink' do
+    it 'can render visual of board with ships that have not been hit or sunk' do
       board = Board.new
       cruiser = Ship.new("Cruiser", 3)
       submarine = Ship.new("Submarine", 2)

@@ -19,11 +19,10 @@ class Game
   def menu
     puts "WELCOME TO BATTLESHIP"
     puts "Enter p to play. Enter q if you are a quitter"
-    @input = gets.chomp
+    @input = gets.chomp.downcase
 
     while input != "p" && input != "q"
       puts "Mind your ps and qs. Try again"
-      #move the strings to a method
       puts "Enter p to play. Enter q if you are a quitter"
       @input = gets.chomp.downcase
     end
@@ -100,7 +99,7 @@ class Game
 
   def setup_cruiser
     puts "Enter the squares for the Cruiser (3 spaces):"
-    cruiser_location = gets.chomp.split
+    cruiser_location = gets.chomp.upcase.split
     while @player_board.valid_placement?(@cruiser_player, cruiser_location) != true
       puts "Those are invalid :( please try again and keep consecutive"
       puts "Enter the squares for the Cruiser (3 spaces):"
@@ -112,7 +111,7 @@ class Game
 
   def setup_sub
     puts "Enter the squares for the Submarine (2 spaces):"
-    sub_location = gets.chomp.split
+    sub_location = gets.chomp.upcase.split
     while @player_board.valid_placement?(@submarine_player, sub_location) != true
       puts "Those are invalid :( please try again and keep consecutive"
       puts "Enter the squares for the Submarine (2 spaces):"
@@ -122,7 +121,6 @@ class Game
     puts @player_board.render(true)
   end
 
-  # Next we need to show the boards
   def display_boards
     puts "=============COMPUTER BOARD============="
     puts @comp_board.render
@@ -132,18 +130,23 @@ class Game
 
   def take_turn
     puts "Enter the coordinate for your shot:"
-    players_shot = gets.chomp
+    players_shot = gets.chomp.upcase
     while @comp_board.valid_coordinate?(players_shot) == false
       puts "That shots not gonna work..."
       puts "Enter the coordinate for your shot:"
-      players_shot = gets.chomp
+      players_shot = gets.chomp.upcase
+    end
+    while @comp_board.cells[players_shot].has_been_fired_upon
+      puts "You've already shot here!"
+      puts "Enter a different coordinate for your shot:"
+      players_shot = gets.chomp.upcase
     end
     turn = Turn.new(players_shot, @comp_board, @player_board)
     turn.computer_fires
     turn.player_fires
+    display_boards
     turn.player_feedback
     turn.comp_feedback
-    display_boards
   end
 
   def comp_ships_sunk?
@@ -159,13 +162,13 @@ class Game
   end
 
   def winner_is
-    if player_ships_sunk? == true
+    if player_ships_sunk? && comp_ships_sunk?
+      puts "We tied!"
+    elsif player_ships_sunk?
       puts "I won (you lose)"
-    elsif comp_ships_sunk? == true
+    elsif comp_ships_sunk?
       puts "You won! Congrats"
     end
     menu
   end
-
-
 end
