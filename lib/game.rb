@@ -14,6 +14,8 @@ class Game
 
     @first_coord = ""
     @input = ""
+
+    @players_shot = ""
   end
 
   def menu
@@ -128,25 +130,37 @@ class Game
     puts @player_board.render(true)
   end
 
-  def take_turn
+  def get_players_shot
     puts "Enter the coordinate for your shot:"
-    players_shot = gets.chomp.upcase
-    while @comp_board.valid_coordinate?(players_shot) == false
-      puts "That shots not gonna work..."
-      puts "Enter the coordinate for your shot:"
-      players_shot = gets.chomp.upcase
+    @players_shot = gets.chomp.upcase
+  end
+
+  def invalid_player_shot
+    @comp_board.valid_coordinate?(@players_shot) == false
+  end
+
+  def duplicate_player_shot
+    @comp_board.cells[@players_shot].has_been_fired_upon
+  end
+
+  def check_player_shot
+    while invalid_player_shot || duplicate_player_shot
+      if invalid_player_shot
+        puts "That shots not gonna work... Try something on the board..."
+      elsif duplicate_player_shot
+        puts "You've already shot here! Pay attention and try a new spot"
+      end
+      get_players_shot
     end
-    while @comp_board.cells[players_shot].has_been_fired_upon
-      puts "You've already shot here!"
-      puts "Enter a different coordinate for your shot:"
-      players_shot = gets.chomp.upcase
-    end
-    turn = Turn.new(players_shot, @comp_board, @player_board)
-    turn.computer_fires
-    turn.player_fires
+  end
+
+  def take_turn
+    get_players_shot
+    check_player_shot
+    turn = Turn.new(@players_shot, @comp_board, @player_board)
+    turn.shots_fired
     display_boards
-    turn.player_feedback
-    turn.comp_feedback
+    turn.feedback
   end
 
   def comp_ships_sunk?
@@ -163,11 +177,11 @@ class Game
 
   def winner_is
     if player_ships_sunk? && comp_ships_sunk?
-      puts "We tied!"
+      puts "We tied! What are the chances!?"
     elsif player_ships_sunk?
       puts "I won (you lose)"
     elsif comp_ships_sunk?
-      puts "You won! Congrats"
+      puts "You won! Congrats- I'll get you next time!"
     end
     menu
   end

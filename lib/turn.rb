@@ -13,6 +13,10 @@ class Turn
   def computer_aims
     computers_potential_shots = @player_board.array_of_coordinates.shuffle
     @computers_shot = computers_potential_shots.pop
+    while @player_board.cells[computers_shot].has_been_fired_upon
+      @computers_shot = computers_potential_shots.pop
+    end
+    @computers_shot
   end
 
   def player_fires
@@ -21,6 +25,11 @@ class Turn
 
   def computer_fires
     @player_board.cells[computer_aims].fire_upon
+  end
+
+  def shots_fired
+    player_fires
+    computer_fires
   end
 
   def comp_feedback
@@ -47,5 +56,10 @@ class Turn
     else
       p "ERROR"
     end
+  end
+
+  def feedback
+    comp_feedback
+    player_feedback
   end
 end

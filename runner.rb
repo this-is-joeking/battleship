@@ -21,6 +21,9 @@ if game.input == "p"
     end
     game.winner_is
   end
+  if game.input == "q"
+    puts "Come back again soon :("
+  end
 elsif game.input == "q"
   puts "Come back again soon :("
 end
