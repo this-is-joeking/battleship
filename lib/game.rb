@@ -135,30 +135,32 @@ class Game
     @players_shot = gets.chomp.upcase
   end
 
-  def valid_player_shot
-    while @comp_board.valid_coordinate?(@players_shot) == false
-      puts "That shots not gonna work..."
-      get_players_shot
-    end
+  def invalid_player_shot
+    @comp_board.valid_coordinate?(@players_shot) == false
   end
 
   def duplicate_player_shot
-    while @comp_board.cells[@players_shot].has_been_fired_upon
-      puts "You've already shot here! Try a new spot"
+    @comp_board.cells[@players_shot].has_been_fired_upon
+  end
+
+  def check_player_shot
+    while invalid_player_shot || duplicate_player_shot
+      if invalid_player_shot
+        puts "That shots not gonna work... Try something on the board"
+      elsif duplicate_player_shot
+        puts "You've already shot here! Try a new spot"
+      end
       get_players_shot
     end
   end
 
   def take_turn
     get_players_shot
-    valid_player_shot
-    duplicate_player_shot
+    check_player_shot
     turn = Turn.new(@players_shot, @comp_board, @player_board)
-    turn.computer_fires
-    turn.player_fires
+    turn.shots_fired
     display_boards
-    turn.player_feedback
-    turn.comp_feedback
+    turn.feedback
   end
 
   def comp_ships_sunk?

@@ -27,6 +27,11 @@ class Turn
     @player_board.cells[computer_aims].fire_upon
   end
 
+  def shots_fired
+    player_fires
+    computer_fires
+  end
+
   def comp_feedback
     comp_result = player_board.cells[@computers_shot].view
     if comp_result == "M"
@@ -51,5 +56,10 @@ class Turn
     else
       p "ERROR"
     end
+  end
+
+  def feedback
+    comp_feedback
+    player_feedback
   end
 end
