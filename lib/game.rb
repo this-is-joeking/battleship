@@ -146,9 +146,9 @@ class Game
   def check_player_shot
     while invalid_player_shot || duplicate_player_shot
       if invalid_player_shot
-        puts "That shots not gonna work... Try something on the board"
+        puts "That shots not gonna work... Try something on the board..."
       elsif duplicate_player_shot
-        puts "You've already shot here! Try a new spot"
+        puts "You've already shot here! Pay attention and try a new spot"
       end
       get_players_shot
     end
@@ -177,11 +177,11 @@ class Game
 
   def winner_is
     if player_ships_sunk? && comp_ships_sunk?
-      puts "We tied!"
+      puts "We tied! What are the chances!?"
     elsif player_ships_sunk?
       puts "I won (you lose)"
     elsif comp_ships_sunk?
-      puts "You won! Congrats"
+      puts "You won! Congrats- I'll get you next time!"
     end
     menu
   end
