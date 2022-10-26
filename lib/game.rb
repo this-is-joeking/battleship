@@ -14,6 +14,8 @@ class Game
 
     @first_coord = ""
     @input = ""
+
+    @players_shot = ""
   end
 
   def menu
@@ -128,20 +130,30 @@ class Game
     puts @player_board.render(true)
   end
 
-  def take_turn
+  def get_players_shot
     puts "Enter the coordinate for your shot:"
-    players_shot = gets.chomp.upcase
-    while @comp_board.valid_coordinate?(players_shot) == false
+    @players_shot = gets.chomp.upcase
+  end
+
+  def valid_player_shot
+    while @comp_board.valid_coordinate?(@players_shot) == false
       puts "That shots not gonna work..."
-      puts "Enter the coordinate for your shot:"
-      players_shot = gets.chomp.upcase
+      get_players_shot
     end
-    while @comp_board.cells[players_shot].has_been_fired_upon
-      puts "You've already shot here!"
-      puts "Enter a different coordinate for your shot:"
-      players_shot = gets.chomp.upcase
+  end
+
+  def duplicate_player_shot
+    while @comp_board.cells[@players_shot].has_been_fired_upon
+      puts "You've already shot here! Try a new spot"
+      get_players_shot
     end
-    turn = Turn.new(players_shot, @comp_board, @player_board)
+  end
+
+  def take_turn
+    get_players_shot
+    valid_player_shot
+    duplicate_player_shot
+    turn = Turn.new(@players_shot, @comp_board, @player_board)
     turn.computer_fires
     turn.player_fires
     display_boards
